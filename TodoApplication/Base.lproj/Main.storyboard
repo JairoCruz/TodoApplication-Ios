@@ -13,7 +13,7 @@
         <!--All Tasks-->
         <scene sceneID="Zyz-r2-U86">
             <objects>
-                <tableViewController id="Ahn-67-sIr" sceneMemberID="viewController">
+                <tableViewController id="Ahn-67-sIr" customClass="TodoTableTableViewController" customModule="TodoApplication" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="iYk-3j-AHt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -64,6 +64,9 @@
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="35"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -78,10 +81,10 @@
             </objects>
             <point key="canvasLocation" x="-28" y="-644.52773613193403"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Todo View Controller-->
         <scene sceneID="s2Y-tE-KDI">
             <objects>
-                <viewController id="aqB-ov-ieU" sceneMemberID="viewController">
+                <viewController id="aqB-ov-ieU" customClass="AddTodoViewController" customModule="TodoApplication" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d6L-nZ-aUX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -104,6 +107,9 @@
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="28"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="aqB-ov-ieU" id="dUf-Fh-aiY"/>
+                                        </connections>
                                     </textView>
                                 </subviews>
                             </stackView>
@@ -123,7 +129,7 @@
                                         <rect key="frame" x="0.0" y="36" width="343" height="36"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JeB-E2-5lm">
-                                                <rect key="frame" x="0.0" y="0.0" width="72" height="36"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="36"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="72" id="8Kt-AL-8wz"/>
@@ -137,14 +143,20 @@
                                                         <integer key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="cancel:" destination="aqB-ov-ieU" eventType="touchUpInside" id="La1-yS-dGN"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhL-Gm-515">
-                                                <rect key="frame" x="80" y="0.0" width="263" height="36"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhL-Gm-515">
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="36"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                 <state key="normal" title="Done">
                                                     <color key="titleColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="done:" destination="aqB-ov-ieU" eventType="touchUpInside" id="AV0-DP-m2P"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -156,13 +168,19 @@
                             <constraint firstItem="E4X-jQ-mqe" firstAttribute="leading" secondItem="4th-TL-AVY" secondAttribute="leading" constant="16" id="3kW-UP-7oe"/>
                             <constraint firstItem="E4X-jQ-mqe" firstAttribute="top" secondItem="4th-TL-AVY" secondAttribute="top" id="JHZ-DE-rlA"/>
                             <constraint firstItem="4th-TL-AVY" firstAttribute="trailing" secondItem="6as-Nr-W3K" secondAttribute="trailing" constant="16" id="X9a-lN-kTX"/>
-                            <constraint firstItem="4th-TL-AVY" firstAttribute="bottom" secondItem="6as-Nr-W3K" secondAttribute="bottom" id="gWU-nl-Fm2"/>
+                            <constraint firstAttribute="bottom" secondItem="6as-Nr-W3K" secondAttribute="bottom" id="gWU-nl-Fm2"/>
                             <constraint firstItem="6as-Nr-W3K" firstAttribute="leading" secondItem="d6L-nZ-aUX" secondAttribute="leading" constant="16" id="idK-RZ-v0D"/>
                             <constraint firstItem="4th-TL-AVY" firstAttribute="trailing" secondItem="E4X-jQ-mqe" secondAttribute="trailing" constant="16" id="r0J-at-Brg"/>
                             <constraint firstItem="E4X-jQ-mqe" firstAttribute="height" secondItem="d6L-nZ-aUX" secondAttribute="height" multiplier="0.4" id="vnG-Ho-eWs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4th-TL-AVY"/>
                     </view>
+                    <connections>
+                        <outlet property="bottomConstraint" destination="gWU-nl-Fm2" id="BPJ-fr-C7s"/>
+                        <outlet property="doneButton" destination="AhL-Gm-515" id="X7v-H8-bRZ"/>
+                        <outlet property="segmentedControl" destination="9go-Az-3CE" id="0Yj-KE-K3h"/>
+                        <outlet property="textView" destination="pSz-sS-tGz" id="T4b-j8-YV6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NTo-mm-Irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
