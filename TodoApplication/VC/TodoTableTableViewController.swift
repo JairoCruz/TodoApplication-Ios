@@ -34,6 +34,37 @@ class TodoTableTableViewController: UITableViewController {
 
         return cell
     }
+    
+    // MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
+        
+        let action = UIContextualAction(style: .destructive, title: "Delete"){
+            (action, view, completion) in
+            // TODO: Delete todo
+            completion(true)
+        }
+        
+        action.image = #imageLiteral(resourceName: "delete")
+        action.backgroundColor = .red
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
+        
+        let action = UIContextualAction(style: .destructive, title: "Check"){
+            (action, view, completion) in
+            // TODO: Delete todo
+            completion(true)
+        }
+        
+        action.image = #imageLiteral(resourceName: "done")
+        action.backgroundColor = .white
+        
+        return UISwipeActionsConfiguration(actions: [action])
+        
+    }
  
 
     

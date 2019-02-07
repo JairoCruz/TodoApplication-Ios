@@ -29,7 +29,7 @@ class AddTodoViewController: UIViewController {
             object: nil
         )
         
-        
+        textView.becomeFirstResponder()
     }
     
     // MARK: Actions
@@ -50,8 +50,10 @@ class AddTodoViewController: UIViewController {
     
     @IBAction func cancel(_ sender: UIButton) {
         dismiss(animated: true)
+        textView.resignFirstResponder()
     }
     @IBAction func done(_ sender: UIButton) {
+        dismiss(animated: true)
     }
     
     /*
@@ -64,4 +66,19 @@ class AddTodoViewController: UIViewController {
     }
     */
 
+}
+
+extension AddTodoViewController: UITextViewDelegate{
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if doneButton.isHidden {
+            textView.text.removeAll()
+            textView.textColor = .white
+            
+            doneButton.isHidden = false
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
 }
