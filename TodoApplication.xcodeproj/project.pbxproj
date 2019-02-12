@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B87DA306220BDD010099D115 /* Todos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B87DA304220BDD010099D115 /* Todos.xcdatamodeld */; };
+		B87DA308220BE0AB0099D115 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87DA307220BE0AB0099D115 /* CoreDataStack.swift */; };
 		B8DF18E42203E1FB00116374 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DF18E32203E1FB00116374 /* AddTodoViewController.swift */; };
 		B8DF18E62203E4B000116374 /* TodoTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DF18E52203E4B000116374 /* TodoTableTableViewController.swift */; };
 		B8E7545421E304DB00561E4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E7545321E304DB00561E4C /* AppDelegate.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		B87DA305220BDD010099D115 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		B87DA307220BE0AB0099D115 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		B8DF18E32203E1FB00116374 /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 		B8DF18E52203E4B000116374 /* TodoTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableTableViewController.swift; sourceTree = "<group>"; };
 		B8E7545021E304DB00561E4C /* TodoApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +47,7 @@
 			isa = PBXGroup;
 			children = (
 				B87DA304220BDD010099D115 /* Todos.xcdatamodeld */,
+				B87DA307220BE0AB0099D115 /* CoreDataStack.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				B8E7545621E304DB00561E4C /* ViewController.swift in Sources */,
 				B8DF18E42203E1FB00116374 /* AddTodoViewController.swift in Sources */,
 				B87DA306220BDD010099D115 /* Todos.xcdatamodeld in Sources */,
+				B87DA308220BE0AB0099D115 /* CoreDataStack.swift in Sources */,
 				B8DF18E62203E4B000116374 /* TodoTableTableViewController.swift in Sources */,
 				B8E7545421E304DB00561E4C /* AppDelegate.swift in Sources */,
 			);

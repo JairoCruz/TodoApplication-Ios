@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class AddTodoViewController: UIViewController {
+    
+    // MARK: Properties
+    var managedContext: NSManagedObjectContext!
+    var todo: Todo?
     
     // MARK: OUTLETS
 
@@ -30,6 +35,13 @@ class AddTodoViewController: UIViewController {
         )
         
         textView.becomeFirstResponder()
+        
+        
+        if let todo = todo {
+            textView.text = todo.title
+            textView.text = todo.title
+            segmentedControl.selectedSegmentIndex = Int(todo.priority)
+        }
     }
     
     // MARK: Actions
@@ -48,23 +60,43 @@ class AddTodoViewController: UIViewController {
         }
     }
     
-    @IBAction func cancel(_ sender: UIButton) {
+    fileprivate func dismissAndResign() {
         dismiss(animated: true)
         textView.resignFirstResponder()
     }
-    @IBAction func done(_ sender: UIButton) {
-        dismiss(animated: true)
+    
+    @IBAction func cancel(_ sender: UIButton) {
+        dismissAndResign()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func done(_ sender: UIButton) {
+        
+        guard let title = textView.text, !title.isEmpty else {
+            return
+        }
+        
+        if let todo = self.todo {
+            todo.title = title
+            todo.priority = Int16(segmentedControl.selectedSegmentIndex)
+        }else {
+            let todo = Todo(context: managedContext)
+            todo.title = title
+            todo.priority = Int16(segmentedControl.selectedSegmentIndex)
+            todo.date = Date()
+            
+        }
+        
+        
+        
+        do{
+            try managedContext.save()
+            dismissAndResign()
+        } catch {
+            print("Error saving todo: \(error)")
+        }
     }
-    */
+    
 
 }
 
@@ -76,9 +108,9 @@ extension AddTodoViewController: UITextViewDelegate{
             
             doneButton.isHidden = false
             
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.3){
                 self.view.layoutIfNeeded()
-            })
+            }
         }
     }
 }
