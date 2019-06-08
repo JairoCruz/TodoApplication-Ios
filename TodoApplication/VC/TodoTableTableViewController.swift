@@ -14,12 +14,24 @@ class TodoTableTableViewController: UITableViewController {
     // MARK: Properties
     var resultsController: NSFetchedResultsController<Todo>!
     let  coreDataStack = CoreDataStack()
+    let segment: UISegmentedControl = UISegmentedControl(items: ["All","Done"])
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Request
+        // MARK: Initializar segmented control
+        segment.sizeToFit()
+        segment.selectedSegmentIndex = 0
+        segment.backgroundColor = .gray
+        segment.tintColor = .white
+        segment.addTarget(self, action: #selector(indexChanged(_:)), for: .valueChanged)
+        self.navigationItem.titleView = segment
+        
+        
+        // MARK: Request
         let request: NSFetchRequest<Todo> = Todo.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "state == %@", NSNumber(booleanLiteral: false))
         let sortDescriptors = NSSortDescriptor(key: "date", ascending: true)
         // Init
         request.sortDescriptors = [sortDescriptors]
@@ -39,6 +51,66 @@ class TodoTableTableViewController: UITableViewController {
         }
         
     }
+    
+    // MARK: Action Segmented Control
+    @objc func indexChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            // MARK: Request
+            let request: NSFetchRequest<Todo> = Todo.fetchRequest()
+            
+            request.predicate = NSPredicate(format: "state == %@", NSNumber(booleanLiteral: false))
+            let sortDescriptors = NSSortDescriptor(key: "date", ascending: true)
+            // Init
+            request.sortDescriptors = [sortDescriptors]
+            resultsController = NSFetchedResultsController(
+                fetchRequest: request,
+                managedObjectContext: coreDataStack.managedContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil)
+            
+            resultsController.delegate = self
+            
+            // Fetch
+            do {
+                try resultsController.performFetch()
+            } catch {
+                print("Perform fetch error : \(error)")
+            }
+            self.tableView.reloadData()
+            
+            
+        case 1:
+            // MARK: Request
+            let request: NSFetchRequest<Todo> = Todo.fetchRequest()
+            
+            request.predicate = NSPredicate(format: "state == %@", NSNumber(booleanLiteral: true))
+            let sortDescriptors = NSSortDescriptor(key: "date", ascending: true)
+            // Init
+            request.sortDescriptors = [sortDescriptors]
+            resultsController = NSFetchedResultsController(
+                fetchRequest: request,
+                managedObjectContext: coreDataStack.managedContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil)
+            
+            resultsController.delegate = self
+            
+            // Fetch
+            do {
+                try resultsController.performFetch()
+            } catch {
+                print("Perform fetch error : \(error)")
+            }
+            
+            self.tableView.reloadData()
+            
+        default:
+            //print("All")
+            break
+        }
+        
+    }
 
     // MARK: - Table view data source
 
@@ -52,10 +124,15 @@ class TodoTableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
 
         // Configure the cell...
         let todo = resultsController.object(at: indexPath)
         cell.textLabel?.text = todo.title
+        // cell.detailTextLabel?.text = dateFormatter.string(from: todo.date ?? Date())
+        cell.detailTextLabel?.text = String(todo.state)
 
         return cell
     }
@@ -87,10 +164,11 @@ class TodoTableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
         
-        let action = UIContextualAction(style: .destructive, title: "Check"){
+        let action = UIContextualAction(style: .normal, title: "Check"){
             (action, view, completion) in
             let todo = self.resultsController.object(at: indexPath)
-            self.resultsController.managedObjectContext.delete(todo)
+            todo.state = true
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
             do{
                 try self.resultsController.managedObjectContext.save()
                 completion(true)
@@ -101,7 +179,7 @@ class TodoTableTableViewController: UITableViewController {
         }
         
         action.image = #imageLiteral(resourceName: "done")
-        action.backgroundColor = .white
+        action.backgroundColor = .gray
         
         return UISwipeActionsConfiguration(actions: [action])
         
@@ -158,6 +236,7 @@ extension TodoTableTableViewController: NSFetchedResultsControllerDelegate {
                 tableView.insertRows(at: [indexPath], with: .automatic)
             }
         case .delete:
+            print("soy pr")
             if let indexPath = indexPath {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }

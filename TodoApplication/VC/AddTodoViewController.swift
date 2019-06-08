@@ -84,6 +84,7 @@ class AddTodoViewController: UIViewController {
             todo.title = title
             todo.priority = Int16(segmentedControl.selectedSegmentIndex)
             todo.date = Date()
+            todo.state = false
             
         }
         
